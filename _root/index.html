@@ -1,0 +1,63 @@
+<!--
+/**
+ * 
+ * @file index.html for Neos chat
+ * @author Sinduy <sjsanjsrh@naver.com>
+ * @version 0.0.1
+ * @copyright CC0
+ * 
+*/
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neos chat by Sinduy</title>
+    <script src="scripts/jquery-1.12.4.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- 
+    <script type="text/javascript" src="scripts/rsa2js/rsa.js"></script>
+    <script type="text/javascript" src="scripts/rsa2js/jsbn.js"></script>
+    <script type="text/javascript" src="scripts/rsa2js/prng4.js"></script>
+    <script type="text/javascript" src="scripts/rsa2js/rng.js"></script> 
+    -->
+    <script src="scripts/neos_chat.js"></script>
+    <link rel="stylesheet" href="scripts/login.css">
+    <link rel="stylesheet" href="scripts/msgs.css">
+</head>
+<body style="overflow:hidden;" >
+    <div id="login_main">
+        <h1>
+            <center>
+                Neos vr login
+            </center>
+        </h1>
+        <form id="loginForm">
+                <div id="login_inputs">
+                        <label>Username / E-mail : </label>
+                        <input class="login_input" type="text" name="username"><br>
+                        <label>Password : </label>
+                        <input class="login_input" type="password" name="password">
+                </div>
+                <div id="login_buttons">
+                    <button class="login_btn" id = "btn_login" type="submit">login</button>
+                </div>
+        </form>
+    </div>
+    <div id="messenger_main" style="display:none">
+        <table>
+            <tbody id="tb_msgs"></tbody>
+        </table>
+        <input type="text" id="input_id">
+        </br>
+        <textarea type="text" id="input_msg"></textarea>
+        <br/>
+        <button id="btn_send">메세지 전송</button>
+        <button id="btn_history">메세지 내역</button>
+        <br/>
+        <table>
+            <tbody id="tb_friends"></tbody>
+        </table>
+    </div>
+</body>
+</html>

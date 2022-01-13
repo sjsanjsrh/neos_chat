@@ -1,0 +1,26 @@
+{
+  "name": "neos_chat",
+  "version": "0.0.1",
+  "description": "Neos chat by Sinduy",
+  "main": "neos_chat_core.js",
+  "dependencies": {
+    "express": "^4.17.2",
+    "neosjs-commands": "^1.0.2",
+    "neosjs-headless-interface": "^2.3.2",
+    "socket.io": "^2.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjsanjsrh/neos_chat.git"
+  },
+  "author": "Sinduy",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/sjsanjsrh/neos_chat/issues"
+  },
+  "homepage": "https://github.com/sjsanjsrh/neos_chat#readme"
+}
