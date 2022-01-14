@@ -2,7 +2,7 @@
  * 
  * @file neos_chat.js for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @version 0.0.1
+ * @version 0.0.2
  * @copyright CC0
  * 
 */
@@ -181,19 +181,19 @@ $(function() {
 
 
 
-    $("#btn_send")[0].onclick = function(){
-        const id = $("#input_id")[0].value;
-        input_msg = $("#input_msg")[0]
-        const msg = input_msg.value;
-        socket.emit("client_msg", JSON.stringify({Id: id, Content: msg}));
-        var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length)); // 하단에 추가
-        row.usr.innerHTML = "self";
-        row.cont.innerHTML = msg;
-        input_msg.value = "";
-    }
+    // $("#btn_send")[0].onclick = function(){
+    //     const id = $("#input_id")[0].value;
+    //     input_msg = $("#input_msg")[0]
+    //     const msg = input_msg.value;
+    //     socket.emit("client_msg", JSON.stringify({Id: id, Content: msg}));
+    //     var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length)); // 하단에 추가
+    //     row.usr.innerHTML = "self";
+    //     row.cont.innerHTML = msg;
+    //     input_msg.value = "";
+    // }
 
-    $("#btn_history")[0].onclick = function(){
-        const id = $("#input_id")[0].value;
-        socket.emit("client_msghis", JSON.stringify({Id: id}));
-    }
+    // $("#btn_history")[0].onclick = function(){
+    //     const id = $("#input_id")[0].value;
+    //     socket.emit("client_msghis", JSON.stringify({Id: id}));
+    // }
 })

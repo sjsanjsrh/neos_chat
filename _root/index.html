@@ -22,8 +22,10 @@
     <script type="text/javascript" src="scripts/rsa2js/rng.js"></script> 
     -->
     <script src="scripts/neos_chat.js"></script>
+    <script src="scripts/msg_theme.js"></script>
     <link rel="stylesheet" href="scripts/login.css">
     <link rel="stylesheet" href="scripts/msgs.css">
+    <link rel="stylesheet" href="scripts/msg_theme.css">
 </head>
 <body style="overflow:hidden;" >
     <div id="login_main">
@@ -44,6 +46,7 @@
                 </div>
         </form>
     </div>
+<!--
     <div id="messenger_main" style="display:none">
         <table>
             <tbody id="tb_msgs"></tbody>
@@ -57,6 +60,23 @@
         <br/>
         <table>
             <tbody id="tb_friends"></tbody>
+        </table>
+    </div>
+-->
+    <div id="messenger_main" style="display:none">
+        <div class="msg_theme" id="msg_theme_main">
+            <div class="msg">
+            </div>
+            <div class="sendmsg">
+                <textarea class="textarea" id="input_msg"></textarea>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        </br>
+        <input type="text" id="input_id">
+        <table>
+                <tbody id="tb_friends"></tbody>
         </table>
     </div>
 </body>
