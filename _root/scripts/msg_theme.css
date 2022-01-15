@@ -1,6 +1,6 @@
 .msg_theme{
 	background-color: #c0c0c0;
-	padding: 4px 4px 0px 4px;
+	padding: 4px 4px 4px 4px;
 }
 
 .msg_theme .clear{
@@ -12,67 +12,59 @@
 	height: 4px;
 }
 
-.msg_theme .msg{
+.msg_theme .msg{ 
 	height: calc(100% - 72px);
 	overflow-y: scroll;
 	font-size: 12px;
+	max-height: calc(90vh - 72px);
 }
 
 .msg_theme .msg .time{
 	font-size: 10px;
+	height: 100%;
+    align-self: flex-end;
 }
-
-.msg_theme .msg .mymsg{
-	float: right;
+.msg_theme .msg .box{
+    display: flex;
 	width: 100%;
 }
 
 .msg_theme .msg .mymsg .time{
-	float: right;
-	bottom: 0;
+	text-align: right;
+	margin: auto 0 0 auto;
 }
 
-.msg_theme .msg .mymsg{
-	float: right;
-	position: relative;
+.msg_theme .msg .mymsg .context{
 	min-height: 24px;
-	max-width: calc(100% - 64px);
-	left: 2px;
-	background-color: #a2ff95;
-	z-index: 2;
+	max-width: calc(100% - 128px);
+	left: 0px;
+	background-color: #b4ce9b;
+	z-index: 1;
 	padding: 0px 4px 0px 4px;
 	word-break: break-all;
 }
 
-.msg_theme .msg .othermsg{
-	float: left;
-	width: 100%;
+.msg_theme .msg .mymsg.unread .context{
+	background-color: #cec49b;
 }
 
-.msg_theme .msg .othermsg .box{
-	float: left;
-	width: calc(100% - 48px);
-}
-
-.msg_theme .msg .othermsg .box{
-	float: left;
-	position: relative;
+.msg_theme .msg .othermsg .context{
 	min-height: 24px;
-	max-width: calc(100% - 64px);
-	left: -2px;
-	background-color: #9dfcff;
-	z-index: 2;
+	max-width: calc(100% - 128px);
+	left: 0px;
+	background-color: #9bcece;
+	z-index: 1;
 	padding: 0px 4px 0px 4px;
 	word-break: break-all;
 }
 
-.msg_theme .msg .othermsg .box .time{
-	float: left;
+.msg_theme .msg .othermsg .time{
+	margin: auto 0 0 0;
 }
 
 .msg_theme .sendmsg .textarea{
 	float: left;
-	width: 100%;
+	width: calc(100% - 8px);
 	height: 16px;
 	margin: 0px 0px 0px 0px;
 	padding: 2px 2px 2px 2px;
