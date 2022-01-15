@@ -1,6 +1,6 @@
 {
   "name": "neos_chat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Neos chat by Sinduy",
   "main": "neos_chat_core.js",
   "dependencies": {
