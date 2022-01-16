@@ -10,22 +10,26 @@ onSendMsg = function(){}
 addMsg = function(){}
 clearMsg = function(){}
 
+var fillZero = function (number,n) {
+    return ('0' + number).slice(-n)
+}
+
 class DateStruct{
     constructor(d){
-            var fillZero = function ( number ) {
-                return ('0' + number).slice(-2);
-            }
-            this.year = d.getFullYear();
-            this.month = fillZero(d.getMonth() + 1);
-            this.date = fillZero(d.getDate());
-            this.hour = fillZero(d.getHours());
-            this.minute = fillZero(d.getMinutes());
-            this.second = fillZero(d.getSeconds());
+            this.year = d.getFullYear()
+            this.month = fillZero(d.getMonth() + 1,2)
+            this.date = fillZero(d.getDate(),2)
+            this.hour = fillZero(d.getHours(),2)
+            this.minute = fillZero(d.getMinutes(),2)
+            this.second = fillZero(d.getSeconds(),2)
     }
 }
 function convertTime(time){
-    var d = new DateStruct(new Date(time));
-    return (`${d.year}.${d.month}.${d.date}</br>${d.hour}:${d.minute}`);
+    var d = new DateStruct(new Date(time))
+    var am_pm = d.hour < 12?"AM":"PM"
+    var hour12 = d.hour%12
+    hour12 = fillZero(hour12==0?12:hour12,2)
+    return (`${d.year}.${d.month}.${d.date}</br>${am_pm} ${hour12}:${d.minute}`)
 }
 
 $(function() {
