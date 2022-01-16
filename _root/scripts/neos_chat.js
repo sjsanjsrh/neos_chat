@@ -6,6 +6,7 @@
  * @copyright CC0
  * 
 */
+var DEBUG = true
 const socket = io.connect("http://127.0.0.1:30001", 
     {path: "/socket.io", transports: ["websocket"]});
 socket.on("connect", ()=>{ 
@@ -54,7 +55,7 @@ $(function() {
     }
 
     socket.on("friends", (data)=>{ 
-        console.log(`friends: ${data}`);
+        if(DEBUG)console.log(`friends: ${data}`);
         friends = JSON.parse(data)
         friends.sort(function(a, b){
             var table = ["Online", "Away", "Busy", "Offline"]
@@ -83,7 +84,7 @@ $(function() {
     });
 
     socket.on("server_msg", (data)=>{ 
-        console.log(`server_msg: ${data}`);
+        if(DEBUG)console.log(`server_msg: ${data}`);
         var message = JSON.parse(data)
         var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length));
         row.usr.innerHTML = message.SenderId;
@@ -144,7 +145,7 @@ $(function() {
     }
 
     socket.on("server_msghis", (data)=>{ 
-        console.log(`server_msghis: ${data}`);
+        if(DEBUG)console.log(`server_msghis: ${data}`);
         var messages = JSON.parse(data)
         clearMsg()
         messages.reverse()
