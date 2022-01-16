@@ -3,7 +3,7 @@
  * 
  * @file index.html for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @version 0.0.1
+ * @version 0.0.2
  * @copyright CC0
  * 
 */
@@ -15,15 +15,11 @@
     <title>Neos chat by Sinduy</title>
     <script src="scripts/jquery-1.12.4.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <!-- 
-    <script type="text/javascript" src="scripts/rsa2js/rsa.js"></script>
-    <script type="text/javascript" src="scripts/rsa2js/jsbn.js"></script>
-    <script type="text/javascript" src="scripts/rsa2js/prng4.js"></script>
-    <script type="text/javascript" src="scripts/rsa2js/rng.js"></script> 
-    -->
+    <script src="scripts/msg_theme.js"></script>
     <script src="scripts/neos_chat.js"></script>
     <link rel="stylesheet" href="scripts/login.css">
     <link rel="stylesheet" href="scripts/msgs.css">
+    <link rel="stylesheet" href="scripts/msg_theme.css">
 </head>
 <body style="overflow:hidden;" >
     <div id="login_main">
@@ -44,6 +40,7 @@
                 </div>
         </form>
     </div>
+<!--
     <div id="messenger_main" style="display:none">
         <table>
             <tbody id="tb_msgs"></tbody>
@@ -57,6 +54,23 @@
         <br/>
         <table>
             <tbody id="tb_friends"></tbody>
+        </table>
+    </div>
+-->
+    <div id="messenger_main" style="display:none">
+        <div class="msg_theme" id="msg_theme_main">
+            <div class="msg"></div>
+            <div class="sendmsg">
+                <textarea class="textarea" id="input_msg"></textarea>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <input type="text" id="input_id">
+        </br>
+        <button id="btn_history">메세지 내역</button>
+        <table>
+                <tbody id="tb_friends"></tbody>
         </table>
     </div>
 </body>

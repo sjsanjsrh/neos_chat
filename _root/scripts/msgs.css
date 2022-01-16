@@ -1,5 +1,6 @@
 .ProfileIcon{
     width: 32px;
+	border-radius: 50%; 
 }
 td{
     table-layout:auto;

@@ -2,7 +2,7 @@
  * 
  * @file neos_chat_core.js for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @version 0.0.1
+ * @version 0.0.2
  * @copyright CC0
  * 
 */
@@ -59,7 +59,11 @@ io.on("connect", (socket)=>{
     socket.on("client_msg", (data)=>{
         console.log(`client_msg: ${data}`);
         var message = JSON.parse(data)
-        neos.SendTextMessage(message.Id,message.Content)
+        neos.SendTextMessage(message.Id,message.Content).then((data) => {
+            if(data.State == 200){
+                socket.emit("client_msg_res", JSON.stringify(data.Content))
+            }
+        });
     });
 
     socket.on("client_msghis", (data)=>{
@@ -71,9 +75,9 @@ io.on("connect", (socket)=>{
             });
             socket.emit("server_msghis", JSON.stringify(messages))
             
-            neos.MarkMessagesRead(messages).then((res) => {
-                console.log("MarkMessagesRead: ",res)
-            })
+            // neos.MarkMessagesRead(messages).then((res) => {
+            //     console.log("MarkMessagesRead: ",res)
+            // })
         });
     });
 
@@ -104,3 +108,6 @@ io.on("connect", (socket)=>{
     })
 });
 
+neos.on("error",(e)=>{
+    console.log(e);
+})

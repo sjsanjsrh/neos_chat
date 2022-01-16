@@ -2,10 +2,11 @@
  * 
  * @file neos_chat.js for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @version 0.0.1
+ * @version 0.0.2
  * @copyright CC0
  * 
 */
+var DEBUG = true
 const socket = io.connect("http://127.0.0.1:30001", 
     {path: "/socket.io", transports: ["websocket"]});
 socket.on("connect", ()=>{ 
@@ -18,28 +19,14 @@ socket.on("disconnect", (reason)=>{
 socket.on("error", (error)=>{ 
     console.log(`에러 발생: ${error}`); 
 }); 
-
-
+localUser = undefined;
+printMessageContent = ()=>{}
 class MessageTableRow{
     constructor(row){
         this.icon = row.insertCell(0);
         this.usr  = row.insertCell(1);
         this.read = row.insertCell(2);
         this.cont = row.insertCell(3);
-    }
-}
-
-class DateStruct{
-    constructor(d){
-            var fillZero = function ( number ) {
-                    return (0 + number).toString().slice(-2);
-                }
-            this.year = d.getFullYear();
-            this.month = fillZero(d.getMonth() + 1);
-            this.date = fillZero(d.getDate());
-            this.hour = fillZero(d.getHours());
-            this.minute = fillZero(d.getMinutes());
-            this.second = fillZero(d.getSeconds());
     }
 }
 
@@ -59,14 +46,17 @@ $(function() {
         $("#login_main").css("display","none")
         $("#messenger_main").css("display","")
         $("body").css("overflow","")
+        localUser = res.CurrentUser
     });
 
     setUserID = function(Id){
         $("#input_id")[0].value = Id
+        $("html").scrollTop(0)
+        socket.emit("client_msghis", JSON.stringify({Id}));
     }
 
     socket.on("friends", (data)=>{ 
-        console.log(`friends: ${data}`);
+        if(DEBUG)console.log(`friends: ${data}`);
         friends = JSON.parse(data)
         friends.sort(function(a, b){
             var table = ["Online", "Away", "Busy", "Offline"]
@@ -95,18 +85,18 @@ $(function() {
     });
 
     socket.on("server_msg", (data)=>{ 
-        console.log(`server_msg: ${data}`);
+        if(DEBUG)console.log(`server_msg: ${data}`);
         var message = JSON.parse(data)
-        var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length));
-        row.usr.innerHTML = message.SenderId;
-        row.cont.innerHTML = printMessegeContent(message.MessageType,message.Content);;
+        const id = $("#input_id")[0].value;
+        if(id==message.SenderId){
+            socket.emit("client_msghis", JSON.stringify({Id: id}));
+        }
+        else{
+            // ??
+        }
     });
-    function convertTime(time){
-        var d = new DateStruct(new Date(time));
-        return (`${d.year}.${d.month}.${d.date} ${d.hour}:${d.minute}`);
-    }
 
-    function printMessegeContent(type, content){
+    printMessageContent = (type, content)=>{
         switch (type){
             case "Object":
                 var url
@@ -141,7 +131,7 @@ $(function() {
                 return `<audio src="${url}" controls="controls"></audio>`;
 
             case "Text":
-                return content;
+                return `<div style="white-space: pre-wrap">${content}</div>`;
 
             case "SessionInvite":
                 var obj = JSON.parse(content)
@@ -160,14 +150,18 @@ $(function() {
     }
 
     socket.on("server_msghis", (data)=>{ 
-        console.log(`server_msghis: ${data}`);
+        if(DEBUG)console.log(`server_msghis: ${data}`);
         var messages = JSON.parse(data)
-        tb_msgs.innerText=""
+        clearMsg()
+        messages.reverse()
         messages.forEach(message => {
-            var row = new MessageTableRow(tb_msgs.insertRow(0));
-            row.usr.innerHTML = `<div title="${convertTime(message.SendTime)}">`+message.SenderId+`</div>`;
-            row.read.innerHTML = message._IsRead?`<div title="${convertTime(message.ReadTime)}">○</div>`:"●";
-            row.cont.innerHTML = printMessegeContent(message.MessageType,message.Content);
+            var msg = {
+                self: localUser.Id==message.SenderId,
+                html: printMessageContent(message.MessageType,message.Content),
+                time: convertTime(message.SendTime),
+                isRead: message._IsRead
+            }
+            addMsg(msg)
         });
     });
 
@@ -179,21 +173,25 @@ $(function() {
         return false;
     }
 
-
-
-    $("#btn_send")[0].onclick = function(){
+    socket.on("client_msg_res", (data)=>{
         const id = $("#input_id")[0].value;
-        input_msg = $("#input_msg")[0]
-        const msg = input_msg.value;
-        socket.emit("client_msg", JSON.stringify({Id: id, Content: msg}));
-        var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length)); // 하단에 추가
-        row.usr.innerHTML = "self";
-        row.cont.innerHTML = msg;
-        input_msg.value = "";
-    }
+        socket.emit("client_msghis", JSON.stringify({Id: id}));
+    });
+
+    // $("#btn_send")[0].onclick = function(){
+    //     const id = $("#input_id")[0].value;
+    //     input_msg = $("#input_msg")[0]
+    //     const msg = input_msg.value;
+    //     socket.emit("client_msg", JSON.stringify({Id: id, Content: msg}));
+    //     var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length)); // 하단에 추가
+    //     row.usr.innerHTML = "self";
+    //     row.cont.innerHTML = msg;
+    //     input_msg.value = "";
+    // }
 
     $("#btn_history")[0].onclick = function(){
         const id = $("#input_id")[0].value;
         socket.emit("client_msghis", JSON.stringify({Id: id}));
     }
 })
+
