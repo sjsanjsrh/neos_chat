@@ -36,7 +36,7 @@
 
 .msg_theme .msg .mymsg .context{
 	min-height: 24px;
-	max-width: calc(100% - 128px);
+	max-width: calc(100% - 64px);
 	left: 0px;
 	background-color: #b4ce9b;
 	z-index: 1;
@@ -50,7 +50,7 @@
 
 .msg_theme .msg .othermsg .context{
 	min-height: 24px;
-	max-width: calc(100% - 128px);
+	max-width: calc(100% - 64px);
 	left: 0px;
 	background-color: #9bcece;
 	z-index: 1;
