@@ -88,10 +88,10 @@ $(function() {
         var message = JSON.parse(data)
         var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length));
         row.usr.innerHTML = message.SenderId;
-        row.cont.innerHTML = printMessegeContent(message.MessageType,message.Content);;
+        row.cont.innerHTML = printMessageContent(message.MessageType,message.Content);;
     });
 
-    function printMessegeContent(type, content){
+    function printMessageContent(type, content){
         switch (type){
             case "Object":
                 var url
@@ -126,7 +126,7 @@ $(function() {
                 return `<audio src="${url}" controls="controls"></audio>`;
 
             case "Text":
-                return <div style="white-space: pre-wrap">${content}</div>;
+                return `<div style="white-space: pre-wrap">${content}</div>`;
 
             case "SessionInvite":
                 var obj = JSON.parse(content)
@@ -152,7 +152,7 @@ $(function() {
         messages.forEach(message => {
             var msg = {
                 self: localUser.Id==message.SenderId,
-                html: printMessegeContent(message.MessageType,message.Content),
+                html: printMessageContent(message.MessageType,message.Content),
                 time: convertTime(message.SendTime),
                 isRead: message._IsRead
             }
