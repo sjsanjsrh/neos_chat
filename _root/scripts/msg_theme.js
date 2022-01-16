@@ -6,9 +6,9 @@
  * @copyright CC0
  * 
 */
-onSendMsg = function(){}
-addMsg = function(){}
-clearMsg = function(){}
+onSendMsg = ()=>{}
+addMsg = ()=>{}
+clearMsg = ()=>{}
 
 var fillZero = function (number,n) {
     return ('0' + number).slice(-n)
@@ -36,26 +36,27 @@ $(function() {
     const input_msg = $("#input_msg")
     const msg_theme_main_msg = $("#msg_theme_main .msg")
 
-    onSendMsg = function(){
+    onSendMsg = ()=>{
         const id = $("#input_id")[0].value;
         const data = input_msg[0].value;
         socket.emit("client_msg", JSON.stringify({Id: id, Content: data}));
         var msg  = {
             self: true,
-            html: data,
+            html: printMessageContent("Text",data),
             time: convertTime(new Date()),
             isRead: false
         }
         addMsg(msg)
     }
     
-    clearMsg = function(){
+    clearMsg = ()=>{
         msg_theme_main_msg.empty()
     }
 
-    addMsg = function(msg){
+    addMsg = (msg)=>{
         var html = 
-            `<div class="${msg.self?"mymsg":"othermsg"}${msg.isRead?"":" unread"}">\n`+
+            `<div class="${msg.self?"mymsg":"othermsg"}${msg.isRead?"":" unread"}" `+
+                `id=${msg.id}>\n`+
             `   <div class="box">\n`+
             (msg.self?
             `       <div class="time">${msg.time}</div>\n`:(""))+
@@ -71,7 +72,7 @@ $(function() {
         msg_theme_main_msg.scrollTop(msg_theme_main_msg[0].scrollHeight)
     }
 
-    input_msg.on('keydown', function () {
+    input_msg.on('keydown', ()=>{
         if(event.keyCode==13){
             if(!event.shiftKey)
             {
@@ -81,7 +82,7 @@ $(function() {
             }
         }
     });
-    input_msg.on('keydown keyup', function () {
+    input_msg.on('keydown keyup', ()=>{
         if($(this).height() < 128)
             $(this).height(1).height( $(this).prop('scrollHeight') )
     });

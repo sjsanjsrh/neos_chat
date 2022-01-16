@@ -20,7 +20,7 @@ socket.on("error", (error)=>{
     console.log(`에러 발생: ${error}`); 
 }); 
 localUser = undefined;
-
+printMessageContent = ()=>{}
 class MessageTableRow{
     constructor(row){
         this.icon = row.insertCell(0);
@@ -52,6 +52,7 @@ $(function() {
     setUserID = function(Id){
         $("#input_id")[0].value = Id
         $("html").scrollTop(0)
+        socket.emit("client_msghis", JSON.stringify({Id}));
     }
 
     socket.on("friends", (data)=>{ 
@@ -86,12 +87,16 @@ $(function() {
     socket.on("server_msg", (data)=>{ 
         if(DEBUG)console.log(`server_msg: ${data}`);
         var message = JSON.parse(data)
-        var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length));
-        row.usr.innerHTML = message.SenderId;
-        row.cont.innerHTML = printMessageContent(message.MessageType,message.Content);;
+        const id = $("#input_id")[0].value;
+        if(id==message.SenderId){
+            socket.emit("client_msghis", JSON.stringify({Id: id}));
+        }
+        else{
+            // ??
+        }
     });
 
-    function printMessageContent(type, content){
+    printMessageContent = (type, content)=>{
         switch (type){
             case "Object":
                 var url
@@ -168,7 +173,10 @@ $(function() {
         return false;
     }
 
-
+    socket.on("client_msg_res", (data)=>{
+        const id = $("#input_id")[0].value;
+        socket.emit("client_msghis", JSON.stringify({Id: id}));
+    });
 
     // $("#btn_send")[0].onclick = function(){
     //     const id = $("#input_id")[0].value;
