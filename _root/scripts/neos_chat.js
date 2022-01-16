@@ -126,7 +126,7 @@ $(function() {
                 return `<audio src="${url}" controls="controls"></audio>`;
 
             case "Text":
-                return content;
+                return <div style="white-space: pre-wrap">${content}</div>;
 
             case "SessionInvite":
                 var obj = JSON.parse(content)
