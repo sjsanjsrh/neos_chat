@@ -106,10 +106,10 @@ $(function() {
                 url = getIconURLAtNeosDBURL(url)
                 img = `<img src=${url} title="${type}" style="height:128px">`
                 
-                if(obj.tags[1] == "photo"){
+                if(obj.tags[1] == "photo" || obj.tags[1] == "image"){
                     // "texture_asset:neosdb:///80c974f0d01395ed44e54ca96965576800eb5ad5dc2eca190ba9ad860d0f89e6.webp"
                     var i = -1
-                    for(var e = 0; e < obj.tags.length; e++){
+                    for(var e = 2; e < obj.tags.length; e++){
                         if((/^texture_asset:/).test(obj.tags[e])){
                             i = e;
                             break;
@@ -118,7 +118,7 @@ $(function() {
                     if(i != -1){
                         harf = obj.tags[i].replace("texture_asset:","")
                         harf = getIconURLAtNeosDBURL(harf)
-                        title = "photo"
+                        title = obj.tags[1]
                     }
                     return `<a href="${harf}" target="_blank">${img}</a>`;
                 }

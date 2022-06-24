@@ -47,6 +47,7 @@ $(function() {
             isRead: false
         }
         addMsg(msg)
+        input_msg[0].value = ""
     }
     
     clearMsg = ()=>{
