@@ -81,6 +81,12 @@ io.on("connect", (socket)=>{
         });
     });
 
+    socket.on("markMessagesRead", (data)=>{
+        neos.MarkMessagesRead(data).then((res) => {
+            console.log("markMessagesRead: ",res)
+        })
+    })
+
     neos.on("messageReceived",(message)=>{
         // neos.SendTextMessage(message.SenderId,message.Content) // Reply recieved message back
         console.log("messageReceived: ",message.SenderId,message.Content)
