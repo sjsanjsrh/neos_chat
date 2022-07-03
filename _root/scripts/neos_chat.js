@@ -7,6 +7,7 @@
  * 
 */
 var DEBUG = true
+
 const socket = io.connect("http://127.0.0.1:30001", 
     {path: "/socket.io", transports: ["websocket"]});
 socket.on("connect", ()=>{ 
@@ -19,8 +20,11 @@ socket.on("disconnect", (reason)=>{
 socket.on("error", (error)=>{ 
     console.log(`에러 발생: ${error}`); 
 }); 
+
 localUser = undefined;
+friends = []
 printMessageContent = ()=>{}
+
 class MessageTableRow{
     constructor(row){
         this.icon = row.insertCell(0);
@@ -57,11 +61,17 @@ $(function() {
         socket.emit("client_msghis", JSON.stringify({Id}));
     }
 
-    socket.on("friends", (data)=>{ 
-        if(DEBUG)console.log(`friends: ${data}`);
-        friends = JSON.parse(data)
+    socket.on("friend", (data)=>{ 
+        if(DEBUG)console.log(`friend: ${data}`);
+        friend = JSON.parse(data)
+
+        let i = friends.findIndex((element) =>
+            element.Id == friend.Id)
+        if (i >= 0) friends.splice(i,1)
+            friends.push(friend)
+
         friends.sort(function(a, b){
-            var table = ["Online", "Away", "Busy", "Offline"]
+            var table = ["Requested", "Online", "Away", "Busy", "Offline"]
             return table.indexOf(a.Status) - table.indexOf(b.Status)
         });
         tb_friends.innerText=""
@@ -71,6 +81,7 @@ $(function() {
             var name = row.insertCell(1);
             var id   = row.insertCell(2);
             var color = 
+            element.Status == "Requested" ? "#000000" :
                 element.Status == "Online" ? "#126b00" : 
                 element.Status == "Away" ? "#a39800" : 
                 element.Status == "Offline" ? "#525252" : "#a30000";
@@ -91,23 +102,30 @@ $(function() {
         var message = JSON.parse(data)
         const id = $("#input_id")[0].value;
         if(id==message.SenderId){
-            // 모종의 이유로 서버에서 for error 발생
-            //socket.emit("client_msghis", JSON.stringify({Id: id}));
             socket.emit("markMessagesRead", data);
         }
         else{
             // 다른 유저로부터 온 메시지 처리
             var text = message.MessageType === "Text" ? message.Content : message.MessageType
+            var name = message.SenderId
+            var neosIconURL = "https://cloudxstorage.blob.core.windows.net/assets/27095aed82033a1b36f4051f3bda0e654ff21c0f816f14bf3bb9d574f1f97a34"
+            let i = friends.findIndex((element) =>
+                element.Id == message.SenderId)
+            if(i >= 0) {
+                name = element[i].Name
+                if(message.IconUrl) neosIconURL = getIconURLAtNeosDBURL(message.IconUrl)
+            }
+
             //if (Notification && Notification.permission === "granted") { // Worker 사용하여야함!
             if(false){
-                var neosIconURL = "https://cloudxstorage.blob.core.windows.net/assets/27095aed82033a1b36f4051f3bda0e654ff21c0f816f14bf3bb9d574f1f97a34"
-                var notification = new Notification(message.SenderId, {icon: neosIconURL, body: text});
+                
+                var notification = new Notification(name, {icon: neosIconURL, body: text});
                 setTimeout(notification.close.bind(notification), 4000);
                 
-                if(DEBUG)console.log(`Notification: ${message.SenderId}: ${text}`);
+                if(DEBUG)console.log(`Notification: ${name}: ${text}`);
             }
             else{
-                alert(message.SenderId + '\n' + text);
+                alert(name + '\n' + text);
             }
         }
     });

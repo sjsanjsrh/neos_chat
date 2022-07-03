@@ -53,7 +53,6 @@ io.on("connect", (socket)=>{
         logindata = {CurrentUser: obj.CurrentUser, CurrentSession: obj.CurrentSession}
         console.log(logindata)
         socket.emit("login_data", JSON.stringify(logindata))
-        socket.emit("friends", JSON.stringify(friends))
     });
 
     socket.on("client_msg", (data)=>{
@@ -105,12 +104,13 @@ io.on("connect", (socket)=>{
             Status: friend.UserStatus.OnlineStatus,
             IconUrl: friend.Profile.IconUrl
         }
+
+        socket.emit("friend", JSON.stringify(data))
         
         let i = friends.findIndex((element) =>
             element.Id == data.Id)
         if (i >= 0) friends.splice(i,1)
         friends.push(data)
-        socket.emit("friends", JSON.stringify(friends))
     })
 });
 
