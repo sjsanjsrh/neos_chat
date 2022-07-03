@@ -81,7 +81,7 @@ $(function() {
             var name = row.insertCell(1);
             var id   = row.insertCell(2);
             var color = 
-            element.Status == "Requested" ? "#000000" :
+                element.Status == "Requested" ? "#000000" :
                 element.Status == "Online" ? "#126b00" : 
                 element.Status == "Away" ? "#a39800" : 
                 element.Status == "Offline" ? "#525252" : "#a30000";
@@ -112,7 +112,7 @@ $(function() {
             let i = friends.findIndex((element) =>
                 element.Id == message.SenderId)
             if(i >= 0) {
-                name = element[i].Name
+                name = friends[i].Name
                 if(message.IconUrl) neosIconURL = getIconURLAtNeosDBURL(message.IconUrl)
             }
 
@@ -186,17 +186,19 @@ $(function() {
     socket.on("server_msghis", (data)=>{ 
         if(DEBUG)console.log(`server_msghis: ${data}`);
         var messages = JSON.parse(data)
-        clearMsg()
-        messages.reverse()
-        messages.forEach(message => {
-            var msg = {
-                self: localUser.Id==message.SenderId,
-                html: printMessageContent(message.MessageType,message.Content),
-                time: convertTime(message.SendTime),
-                isRead: message._IsRead
-            }
-            addMsg(msg)
-        });
+        if(messages){
+            clearMsg()
+            messages.reverse()
+            messages.forEach(message => {
+                var msg = {
+                    self: localUser.Id==message.SenderId,
+                    html: printMessageContent(message.MessageType,message.Content),
+                    time: convertTime(message.SendTime),
+                    isRead: message._IsRead
+                }
+                addMsg(msg)
+            });
+        }
     });
 
     $("#loginForm")[0].onsubmit = function(){
