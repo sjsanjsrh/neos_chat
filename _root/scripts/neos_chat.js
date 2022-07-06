@@ -76,7 +76,7 @@ $(function() {
         });
         tb_friends.innerText=""
         friends.forEach(element => {
-            var row = tb_friends.insertRow( tb_friends.rows.length ); // 하단에 추가
+            var row = tb_friends.insertRow( tb_friends.rows.length );
             var icon = row.insertCell(0);
             var name = row.insertCell(1);
             var id   = row.insertCell(2);
@@ -105,7 +105,6 @@ $(function() {
             socket.emit("markMessagesRead", data);
         }
         else{
-            // 다른 유저로부터 온 메시지 처리
             var text = message.MessageType === "Text" ? message.Content : message.MessageType
             var name = message.SenderId
             var neosIconURL = "https://cloudxstorage.blob.core.windows.net/assets/27095aed82033a1b36f4051f3bda0e654ff21c0f816f14bf3bb9d574f1f97a34"
@@ -242,22 +241,18 @@ function checkNotificationPromise() {
 }
 
 function askNotificationPermission() {
-    // 권한을 실제로 요구하는 함수
     function handlePermission(permission) {
-        // 사용자의 응답에 관계 없이 크롬이 정보를 저장할 수 있도록 함
         if(!('permission' in Notification)) {
             Notification.permission = permission;
         }
     
-        // 사용자 응답에 따라 단추를 보이거나 숨기도록 설정
         if(!(Notification.permission === 'denied' || Notification.permission === 'default')) {
             return;
         }
     }
   
-    // 브라우저가 알림을 지원하는지 확인
     if (!('Notification' in window)) {
-        console.log("이 브라우저는 알림을 지원하지 않습니다.");
+        console.log("This browser doesn't support notification");
     } else {
         if(checkNotificationPromise()) {
             Notification.requestPermission()
