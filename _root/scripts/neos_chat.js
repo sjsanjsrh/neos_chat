@@ -7,6 +7,7 @@
  * 
 */
 var DEBUG = true
+var MSGHIS_LOG = false
 
 const socket = io.connect("http://127.0.0.1:30001", 
     {path: "/socket.io", transports: ["websocket"]});
@@ -114,14 +115,14 @@ $(function() {
                 name = friends[i].Name
                 if(message.IconUrl) neosIconURL = getIconURLAtNeosDBURL(message.IconUrl)
             }
-
-            //if (Notification && Notification.permission === "granted") { // Worker 사용하여야함!
-            if(false){
-                
-                var notification = new Notification(name, {icon: neosIconURL, body: text});
-                setTimeout(notification.close.bind(notification), 4000);
-                
-                if(DEBUG)console.log(`Notification: ${name}: ${text}`);
+            
+            if (Notification && Notification.permission === "granted") {
+                notify = new Notification(name, {icon: neosIconURL, body: text});
+                //setTimeout(notify.close.bind(notify), 4000);
+                notify.onclick = function () {
+                    setUserID(message.SenderId);
+                }
+                if(DEBUG)console.log(`Notification: {"${message.SenderId}":"${text}"}`);
             }
             else{
                 alert(name + '\n' + text);
@@ -183,9 +184,10 @@ $(function() {
     }
 
     socket.on("server_msghis", (data)=>{ 
-        if(DEBUG)console.log(`server_msghis: ${data}`);
+        if(MSGHIS_LOG)console.log(`server_msghis: ${data}`);
         var messages = JSON.parse(data)
         if(messages){
+            if(!MSGHIS_LOG && DEBUG)console.log(`server_msghis: data`);
             clearMsg()
             messages.reverse()
             messages.forEach(message => {
@@ -197,6 +199,9 @@ $(function() {
                 }
                 addMsg(msg)
             });
+        }
+        else{
+            if(!MSGHIS_LOG && DEBUG)console.log(`server_msghis: ${data}`);
         }
     });
 
@@ -218,7 +223,7 @@ $(function() {
     //     input_msg = $("#input_msg")[0]
     //     const msg = input_msg.value;
     //     socket.emit("client_msg", JSON.stringify({Id: id, Content: msg}));
-    //     var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length)); // 하단에 추가
+    //     var row = new MessageTableRow(tb_msgs.insertRow(tb_msgs.rows.length));
     //     row.usr.innerHTML = "self";
     //     row.cont.innerHTML = msg;
     //     input_msg.value = "";
@@ -246,7 +251,7 @@ function askNotificationPermission() {
             Notification.permission = permission;
         }
     
-        if(!(Notification.permission === 'denied' || Notification.permission === 'default')) {
+        if(!(Notification.permission === 'denied')) {
             return;
         }
     }
