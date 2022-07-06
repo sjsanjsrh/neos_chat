@@ -33,7 +33,7 @@ io.on("connect", (socket)=>{
     socket.on("disconnect", (reason)=>{
         console.log(reason);
         console.log(`disconnected client IP: ${ip}, SocketID: ${socket.id}`)
-        neos.Logout();
+        neos.Logout(false); // Can't logout
     });
 
     socket.on("error", (error)=>{
@@ -44,7 +44,7 @@ io.on("connect", (socket)=>{
         usr = JSON.parse(data)
         console.log(`login_req: ${usr.id}`);
         neos.Login(usr.id, usr.pw).then((res) => {
-            console.log(`login: `+res);
+            console.log(`login: ` + JSON.stringify(res))
             socket.emit("login_res", JSON.stringify(res))
         })
     });
