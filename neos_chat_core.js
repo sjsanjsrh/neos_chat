@@ -28,16 +28,16 @@ var friends = []
 
 io.on("connect", (socket)=>{ 
     const ip = socket.request.headers["x-forwarded-for"] || socket.request.connection.remoteAddress;
-    console.log(`클라이언트 연결 성공 - 클라이언트IP: ${ip}, 소켓ID: ${socket.id}`);
+    console.log(`connected client IP: ${ip}, SocketID: ${socket.id}`);
 
     socket.on("disconnect", (reason)=>{
         console.log(reason);
-        console.log(`연결 종료 - 클라이언트IP: ${ip}, 소켓ID: ${socket.id}`)
+        console.log(`disconnected client IP: ${ip}, SocketID: ${socket.id}`)
         neos.Logout();
     });
 
     socket.on("error", (error)=>{
-        console.log(`에러 발생: ${error}`);
+        console.log(`error: ${error}`);
     });
 
     socket.on("login_req", (data)=>{

@@ -11,14 +11,14 @@ var DEBUG = true
 const socket = io.connect("http://127.0.0.1:30001", 
     {path: "/socket.io", transports: ["websocket"]});
 socket.on("connect", ()=>{ 
-    console.log("연결 성공"); 
+    console.log("connectted at core web socket"); 
 }); 
 socket.on("disconnect", (reason)=>{ 
     console.log(reason); 
-    console.log("연결 종료"); 
+    console.log("disconnectted form core web socket"); 
 }); 
 socket.on("error", (error)=>{ 
-    console.log(`에러 발생: ${error}`); 
+    console.log(`error: ${error}`); 
 }); 
 
 localUser = undefined;
