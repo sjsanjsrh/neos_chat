@@ -58,21 +58,25 @@
         </table>
     </div>
 -->
-    <div id="messenger_main" style="display:none">
-        <div class="msg_theme" id="msg_theme_main">
-            <div class="msg"></div>
-            <div class="sendmsg">
-                <textarea class="textarea" id="input_msg"></textarea>
-                <div class="clear">
+    <div id="messenger_main" class="msgs" style="display:none">
+        <div id="friendList">
+            <table>
+                <tbody id="tb_friends"></tbody>
+            </table>
+        </div>
+        <div id="msgs">
+            <div class="msg_theme" id="msg_theme_main">
+                <div class="msg"></div>
+                <div class="sendmsg">
+                    <textarea class="textarea" id="input_msg"></textarea>
+                    <div class="clear">
+                    </div>
                 </div>
             </div>
+            <input type="text" id="input_id">
+            </br>
+            <button id="btn_history">메세지 내역</button>
         </div>
-        <input type="text" id="input_id">
-        </br>
-        <button id="btn_history">메세지 내역</button>
-        <table>
-                <tbody id="tb_friends"></tbody>
-        </table>
     </div>
 </body>
 </html>

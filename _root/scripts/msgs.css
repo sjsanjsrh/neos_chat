@@ -1,7 +1,30 @@
-.ProfileIcon{
+#messenger_main{
+    display: flex;
+}
+
+#msgs{
+    width: 100%;
+    min-width: 250px;
+}
+#msgs #input_id{
+    width: calc(100% - 4px);
+}
+
+#friendList{
+    flex-basis: 100vw;
+    max-width: fit-content;
+    min-width: 120px;
+    padding-right: 4px;
+    overflow-y: scroll;
+    height: calc(100vh - 18px);
+    max-height: calc(100vh - 18px);
+}
+#friendList .ProfileIcon{
     width: 32px;
 	border-radius: 50%; 
 }
-td{
+#friendList td{
     table-layout:auto;
+}.hidden-col{
+    display: none;
 }

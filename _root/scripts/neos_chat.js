@@ -79,8 +79,11 @@ $(function() {
         friends.forEach(element => {
             var row = tb_friends.insertRow( tb_friends.rows.length );
             var icon = row.insertCell(0);
+            icon.className = "icon"
             var name = row.insertCell(1);
+            name.className = "name"
             var id   = row.insertCell(2);
+            id.className = "id hidden-col"
             var color = 
                 element.Status == "Requested" ? "#000000" :
                 element.Status == "Online" ? "#126b00" : 
