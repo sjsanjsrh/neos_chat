@@ -98,9 +98,10 @@ $(function() {
         });
     });
 
-    socket.on("server_msg", (data)=>{ 
+    socket.on("server_msg", (data)=>{
         if(DEBUG)console.log(`server_msg: ${data}`);
         var message = JSON.parse(data)
+
         const id = $("#input_id")[0].value;
         if(id==message.SenderId){
             socket.emit("markMessagesRead", data);
