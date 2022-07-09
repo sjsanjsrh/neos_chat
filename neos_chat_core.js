@@ -2,7 +2,6 @@
  * 
  * @file neos_chat_core.js for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @copyright CC0
  * 
 */
 const Neos = require("@bombitmanbomb/neosjs")

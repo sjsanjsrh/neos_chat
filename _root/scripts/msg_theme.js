@@ -2,7 +2,6 @@
  * 
  * @file msg_theme.js for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @copyright CC0
  * 
 */
 onSendMsg = ()=>{}

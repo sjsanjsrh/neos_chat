@@ -2,7 +2,6 @@
  * 
  * @file neos_chat.js for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @copyright CC0
  * 
 */
 var DEBUG = true
