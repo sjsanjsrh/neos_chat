@@ -2,7 +2,6 @@
  * 
  * @file neos_chat.js for Neos chat
  * @author Sinduy <sjsanjsrh@naver.com>
- * @version 0.0.2
  * @copyright CC0
  * 
 */
