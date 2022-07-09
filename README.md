@@ -7,7 +7,7 @@ This project based on [neos.js][neosjs]
 API documentation
 [v1](https://polylogix-studio.github.io/Neos.js/),
 [v2](https://neos-api.polylogix.studio/)
-### TodoList
+### Update Note
 
 - <details><summary>v 0.0.2</summary>
 
