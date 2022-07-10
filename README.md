@@ -11,12 +11,10 @@ API documentation
 
 - <details><summary>master</summary>
     
+    - [x] chainge node version at 12.21.0
     - [ ] 휴대폰용 테마 만들기
     - [ ] 메뉴 전환 만들기
     - [ ] 캐싱
     - [ ] 친구추가 관련 기능
     - [ ] 기타 테마 만들기...
-    - [ ] 로그인 세션 구현 - http://zinirun.blogspot.com/2020/03/nodejs_81.html
-    - [ ] 비밀번호 유출 방지 - https://chulkang.tistory.com/81 참조
-    - [ ] pi에 올리기...?
 </details>
