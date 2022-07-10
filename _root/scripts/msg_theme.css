@@ -3,24 +3,24 @@
 	padding: 4px 4px 4px 4px;
 }
 
-.msg_theme .clear{
-	clear: both;
+.msg_theme .msg .top{
+	margin-top: auto;
 }
-
 .msg_theme .blank{
-	clear: both;
-	height: 4px;
+	margin-top: 4px
 }
 
 .msg_theme .msg{ 
-	height: calc(100% - 72px);
+	height: calc(100vh - 72px);
 	overflow-y: scroll;
-	font-size: 12px;
+	font-size: medium;
 	max-height: calc(90vh - 72px);
+	display: flex;
+    flex-direction: column;
 }
 
 .msg_theme .msg .time{
-	font-size: 10px;
+	font-size: xx-small;
 	height: 100%;
     align-self: flex-end;
 }
@@ -63,9 +63,9 @@
 }
 
 .msg_theme .sendmsg .textarea{
-	float: left;
 	width: calc(100% - 8px);
-	height: 16px;
+	height: auto;
+	font-size: medium;
 	margin: 0px 0px 0px 0px;
 	padding: 2px 2px 2px 2px;
 	resize: none;

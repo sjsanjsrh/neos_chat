@@ -32,7 +32,7 @@ io.on("connect", (socket)=>{
         console.log(reason);
         console.log(`disconnected client IP: ${ip}, SocketID: ${socket.id}`)
         neos.Logout(true) // manualLogOut
-        //neos = new Neos()
+        neos = new Neos()
     });
 
     socket.on("error", (error)=>{

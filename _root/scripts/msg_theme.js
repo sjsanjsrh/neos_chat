@@ -50,10 +50,13 @@ $(function() {
     
     clearMsg = ()=>{
         msg_theme_main_msg.empty()
+        
+        let html = `<div class="top"></div>`;
+        msg_theme_main_msg.append(html)
     }
 
     addMsg = (msg)=>{
-        var html = 
+        let html = 
             `<div class="${msg.self?"mymsg":"othermsg"}${msg.isRead?"":" unread"}" `+
                 `id=${msg.id}>\n`+
             `   <div class="box">\n`+
