@@ -5,7 +5,7 @@
  * 
 */
 const Neos = require("@bombitmanbomb/neosjs")
-const neos = new Neos()
+neos = new Neos()
 
 const express = require("express");
 const app = express();
@@ -31,7 +31,8 @@ io.on("connect", (socket)=>{
     socket.on("disconnect", (reason)=>{
         console.log(reason);
         console.log(`disconnected client IP: ${ip}, SocketID: ${socket.id}`)
-        neos.Logout(false); // Can't logout
+        neos.Logout(true) // manualLogOut
+        //neos = new Neos()
     });
 
     socket.on("error", (error)=>{
