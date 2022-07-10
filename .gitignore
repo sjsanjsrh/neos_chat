@@ -108,3 +108,5 @@ dist
 
 note.txt
 node-v*/
+install.*
+run.*
