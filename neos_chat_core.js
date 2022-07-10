@@ -68,7 +68,7 @@ io.on("connect", (socket)=>{
         console.log(`client_msghis: ${data}`);
         var message = JSON.parse(data)
         neos.GetMessageHistory(message.Id).then((messages) => {
-            messages?.forEach(element => {
+            if(messages) messages.forEach(element => {
                 element._IsRead = element.IsRead
             });
             socket.emit("server_msghis", JSON.stringify(messages))
