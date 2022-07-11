@@ -79,9 +79,9 @@ io.on("connect", (socket)=>{
         });
     });
 
-    socket.on("markMessagesRead", (data)=>{
-        neos.MarkMessagesRead(data).then((res) => {
-            console.log("markMessagesRead: ",res)
+    socket.on("markMessageRead", (data)=>{
+        neos.CloudXInterface.MarkMessagesRead([data]).then((res) => {
+            console.log("markMessageRead: ",res)
         })
     })
 

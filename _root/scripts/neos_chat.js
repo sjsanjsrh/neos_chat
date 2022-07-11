@@ -57,7 +57,7 @@ $(function() {
     setUserID = function(Id){
         $("#input_id")[0].value = Id
         $("html").scrollTop(0)
-        socket.emit("client_msghis", JSON.stringify({Id}));
+        msghis()
     }
 
     socket.on("friend", (data)=>{ 
@@ -103,9 +103,9 @@ $(function() {
         if(DEBUG)console.log(`server_msg: ${data}`);
         var message = JSON.parse(data)
 
-        const id = $("#input_id")[0].value;
+        let id = $("#input_id")[0].value;
         if(id==message.SenderId){
-            socket.emit("markMessagesRead", data);
+            socket.emit("markMessageRead", message.Id);
         }
         else{
             var text = message.MessageType === "Text" ? message.Content : message.MessageType
@@ -185,7 +185,9 @@ $(function() {
         }
     }
 
+    var fail_msghis = 0
     socket.on("server_msghis", (data)=>{ 
+        fail_msghis = 0
         if(MSGHIS_LOG)console.log(`server_msghis: ${data}`);
         var messages = JSON.parse(data)
         if(messages){
@@ -201,24 +203,28 @@ $(function() {
                 }
                 addMsg(msg)
             });
+            $(".msg_theme .loadingbox").css("display","none")
         }
         else{
+            if(fail_msghis > 5){
+                socket.emit('server_msghis')
+            }
+            else{
+                $(".msg_theme .loadingbox").css("display","none")
+            }
+            fail_msghis++
             if(!MSGHIS_LOG && DEBUG)console.log(`server_msghis: ${data}`);
         }
     });
 
     $("#loginForm")[0].onsubmit = function(){
+        $("#btn_login").attr('disabled', 'disabled')
         socket.emit("login_req", JSON.stringify({
             id: $("input[name='username']")[0].value, 
             pw: $("input[name='password']")[0].value
-        }));
-        return false;
+        }))
+        return false
     }
-
-    socket.on("client_msg_res", (data)=>{
-        const id = $("#input_id")[0].value;
-        socket.emit("client_msghis", JSON.stringify({Id: id}));
-    });
 
     // $("#btn_send")[0].onclick = function(){
     //     const id = $("#input_id")[0].value;
@@ -231,11 +237,20 @@ $(function() {
     //     input_msg.value = "";
     // }
 
+    socket.on("client_msg_res", (data)=>{
+        msghis()
+    });
+
     $("#btn_history")[0].onclick = function(){
-        const id = $("#input_id")[0].value;
-        socket.emit("client_msghis", JSON.stringify({Id: id}));
+        msghis()
     }
 })
+function msghis(){
+    const id = $("#input_id")[0].value;
+    socket.emit("client_msghis", JSON.stringify({Id: id}));
+    $(".msg_theme .loadingbox").css("display","")
+}
+
 
 function checkNotificationPromise() {
     try {

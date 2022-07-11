@@ -1,6 +1,15 @@
 .msg_theme{
 	background-color: #c0c0c0;
 	padding: 4px 4px 4px 4px;
+    position: relative;
+}
+
+#msgs .loadingbox{
+	width: calc(100% - 8px);
+    position: absolute;
+    height: calc(100vh - 103px);
+    background-color: #ffffff40;
+    z-index: 99;
 }
 
 .msg_theme .msg .top{
@@ -8,6 +17,12 @@
 }
 .msg_theme .blank{
 	margin-top: 4px
+}
+
+.msg_theme .sysmsg {
+    margin: 0px auto;
+	font-size: medium;
+	color: #272727;
 }
 
 .msg_theme .msg{ 

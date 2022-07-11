@@ -5,6 +5,7 @@
  * 
 */
 onSendMsg = ()=>{}
+addSysMsg = ()=>{}
 addMsg = ()=>{}
 clearMsg = ()=>{}
 
@@ -55,6 +56,11 @@ $(function() {
         msg_theme_main_msg.append(html)
     }
 
+    addSysMsg = (msg)=>{
+        let html = `<div class="sysmsg">${msg}</div>`;
+        msg_theme_main_msg.append(html)
+    }
+
     addMsg = (msg)=>{
         let html = 
             `<div class="${msg.self?"mymsg":"othermsg"}${msg.isRead?"":" unread"}" `+
@@ -83,7 +89,7 @@ $(function() {
             this.innerHTML = '친구목록 보이기'
         }
         else{
-            friendList.removeAttr('style')
+            friendList[0].removeAttr('style')
             this.innerHTML = '친구목록 숨기기'
         }
     }
