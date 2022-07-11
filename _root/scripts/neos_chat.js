@@ -247,6 +247,7 @@ function checkNotificationPromise() {
     return true;
 }
 
+
 function askNotificationPermission() {
     function handlePermission(permission) {
         if(!('permission' in Notification)) {

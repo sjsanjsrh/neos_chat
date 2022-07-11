@@ -74,6 +74,20 @@ $(function() {
         msg_theme_main_msg.scrollTop(msg_theme_main_msg[0].scrollHeight)
     }
 
+    $("#btn_toggleFriendList")[0].onclick = function(){
+        friendList = $("#friendList")
+        
+        if(!(friendList.css('min-width') == '0px')){
+            friendList.css('flex-basis', '0px')
+            friendList.css('min-width', '0px')
+            this.innerHTML = '친구목록 보이기'
+        }
+        else{
+            friendList.removeAttr('style')
+            this.innerHTML = '친구목록 숨기기'
+        }
+    }
+
     input_msg.on('keydown', ()=>{
         if(event.keyCode==13){
             if(!event.shiftKey)
