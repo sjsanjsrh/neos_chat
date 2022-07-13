@@ -1,6 +1,6 @@
 {
   "name": "neos_chat-master",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Neos chat by Sinduy",
   "main": "neos_chat_core.js",
   "scripts": {
